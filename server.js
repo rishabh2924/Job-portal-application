@@ -1,17 +1,36 @@
 //imports
 import express from "express";
 import dotenv from'dotenv';
+import connectDB from "./config/db.js";
+import testRoute from "./routes/testRoute.js"
+import authRoutes from "./routes/authRoute.js"
+import morgan from "morgan";
+import "express-async-errors"
+import cors from "cors"
+import errorMiddleware from "./middlewares/errorMiddleware.js";
 
 //config DOT ENV
 dotenv.config()
 
+//mongoDb connection
+connectDB();
+
 //rest objects
 const app=express();
+
+
+
+//middleware
+app.use(express.json());
+app.use(cors())
+app.use(morgan("dev"))
  
 //routes
-app.get('/',(req,res)=>{
-    res.send('<h1>welcome to job portal</h1>')
-})
+app.use('/api/v1/test',testRoute)
+app.use('/api/v1/auth',authRoutes)
+
+//validation middleware
+app.use(errorMiddleware);
 
 //PORT
 const PORT = process.env.PORT || 8080
