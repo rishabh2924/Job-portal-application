@@ -8,6 +8,8 @@ import morgan from "morgan";
 import "express-async-errors"
 import cors from "cors"
 import errorMiddleware from "./middlewares/errorMiddleware.js";
+import userRoutes from "./routes/userRoutes.js"
+import jobRoutes from "./routes/jobsRoutes.js"
 
 //config DOT ENV
 dotenv.config()
@@ -28,6 +30,8 @@ app.use(morgan("dev"))
 //routes
 app.use('/api/v1/test',testRoute)
 app.use('/api/v1/auth',authRoutes)
+app.use('/api/v1/user',userRoutes)
+app.use('/api/v1/job', jobRoutes)
 
 //validation middleware
 app.use(errorMiddleware);
